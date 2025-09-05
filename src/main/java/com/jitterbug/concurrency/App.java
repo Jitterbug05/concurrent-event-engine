@@ -1,6 +1,9 @@
 package com.jitterbug.concurrency;
 
+import com.jitterbug.concurrency.aggregation.ConcurrentAggregator;
+import com.jitterbug.concurrency.aggregation.EventAggregator;
 import com.jitterbug.concurrency.event.EventGenerator;
+import com.jitterbug.concurrency.processing.AggregatingEventHandler;
 import com.jitterbug.concurrency.processing.EventHandler;
 import com.jitterbug.concurrency.processing.ExecutorEventProcessor;
 import com.jitterbug.concurrency.processing.LoggingEventHandler;
@@ -18,7 +21,8 @@ public class App
         EventQueue queue = new BlockingQueueAdapter(1000);
         EventGenerator generator = new EventGenerator();
 
-        EventHandler handler = new LoggingEventHandler();
+        EventAggregator aggregator = new ConcurrentAggregator();
+        AggregatingEventHandler handler = new AggregatingEventHandler(aggregator);
 
         ExecutorEventProcessor processor = new ExecutorEventProcessor(4);
         processor.start(queue, handler);
@@ -35,6 +39,6 @@ public class App
             processor.stop();
         }
 
-
+        System.out.println("Count for user 42 = " + aggregator.getCountForUser(42));
     }
 }

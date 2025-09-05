@@ -17,6 +17,10 @@ public class Event {
         this.actionType = actionType;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
