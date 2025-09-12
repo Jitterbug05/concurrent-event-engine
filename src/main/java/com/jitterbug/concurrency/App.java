@@ -35,12 +35,11 @@ public class App
         scheduler.schedule(metricsCollector, 1000);
 
         ExecutorEventProcessor processor = new ExecutorEventProcessor(4);
-        processor.start(queue, handler);
-
-        generator.eventStream(500, queue::publish);
+        processor.start(queue, metricsEventHandler);
+        generator.eventStream(50000, queue::publish);
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException ignore) {
 
         } finally {
