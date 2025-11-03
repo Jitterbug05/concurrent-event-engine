@@ -15,8 +15,6 @@ public class MetricsEventHandler implements EventHandler {
 
     @Override
     public void handle(Event event) {
-        System.out.println("Processed: " + event);
-
         long start = System.nanoTime();
         delegate.handle(event);
         collector.recordEvent(event, start);

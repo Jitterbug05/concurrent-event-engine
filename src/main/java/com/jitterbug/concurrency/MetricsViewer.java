@@ -7,7 +7,7 @@ public class MetricsViewer {
         String filePath = "metrics.csv";
 
         MetricsChart.showCart(filePath, "eventsProcessed", "Events/sec");
-        MetricsChart.showCart(filePath, "avgLatencyMs", "Latency (ms)");
+        MetricsChart.showCart(filePath, "avgLatencyMicros", "Latency (microseconds)");
         MetricsChart.showCart(filePath, "usedMemoryMB", "Memory (MB)");
     }
 }

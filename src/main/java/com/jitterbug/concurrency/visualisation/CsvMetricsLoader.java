@@ -25,7 +25,7 @@ public class CsvMetricsLoader {
                 Instant timestamp = Instant.parse(parts[0]);
                 ZonedDateTime zonedDateTime = timestamp.atZone(ZoneId.systemDefault());
 
-                long value = Math.round(Double.parseDouble(getColumn(parts, header, column)));
+                double value = Double.parseDouble(getColumn(parts, header, column));
                 series.addOrUpdate(new Second(zonedDateTime.getSecond(), zonedDateTime.getMinute(), zonedDateTime.getHour(),
                                               zonedDateTime.getDayOfMonth(), zonedDateTime.getMonthValue(), zonedDateTime.getYear()),
                         value);

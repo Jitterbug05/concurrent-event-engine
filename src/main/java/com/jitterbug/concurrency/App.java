@@ -7,9 +7,7 @@ import com.jitterbug.concurrency.metrics.CsvMetricsCollector;
 import com.jitterbug.concurrency.metrics.MetricsEventHandler;
 import com.jitterbug.concurrency.metrics.MetricsScheduler;
 import com.jitterbug.concurrency.processing.AggregatingEventHandler;
-import com.jitterbug.concurrency.processing.EventHandler;
 import com.jitterbug.concurrency.processing.ExecutorEventProcessor;
-import com.jitterbug.concurrency.processing.LoggingEventHandler;
 import com.jitterbug.concurrency.queue.BlockingQueueAdapter;
 import com.jitterbug.concurrency.queue.EventQueue;
 
@@ -34,12 +32,12 @@ public class App
         MetricsScheduler scheduler = new MetricsScheduler();
         scheduler.schedule(metricsCollector, 1000);
 
-        ExecutorEventProcessor processor = new ExecutorEventProcessor(4);
+        ExecutorEventProcessor processor = new ExecutorEventProcessor(8);
         processor.start(queue, metricsEventHandler);
-        generator.eventStream(50000, queue::publish);
+        generator.eventStream(100000, queue::publish);
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(60000);
         } catch (InterruptedException ignore) {
 
         } finally {
@@ -48,6 +46,6 @@ public class App
             metricsCollector.shutdown();
         }
 
-        System.out.println("Count for user 42 = " + aggregator.getCountForUser(42));
+        metricsCollector.printFinalSummary();
     }
 }

@@ -9,12 +9,14 @@ public class Event {
     private final long userId;
     private final Instant timestamp;
     private final Action actionType;
+    private final byte[] payload;
 
     public Event(long id, long userId, Instant timestamp, Action actionType) {
         this.id = id;
         this.userId = userId;
         this.timestamp = timestamp;
         this.actionType = actionType;
+        this.payload = new byte[1024]; // 1 kb per event
     }
 
     public long getUserId() {
